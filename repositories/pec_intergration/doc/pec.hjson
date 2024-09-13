@@ -1,0 +1,115 @@
+{
+    name: "pec",
+    clock_primary: "clk",
+    reset_primary: "rst",
+    bus_interfaces: [
+        { protocol: "reg_iface",
+        direction: "device"
+        }
+    ],
+
+    regwidth: "32",
+    registers: [
+        {
+            name: "CTRL",
+            desc: "Controls segment's addresses and trigger signal of the accelerator.",
+            swaccess: "rw",
+            hwaccess: "hrw",
+            fields: [
+                { 
+                    bits: "0",
+                    name: "START",
+                    desc: "Trigger operation on rising edge."
+                },
+                {
+                    bits: "3:1",
+                    name: "OPERATION",
+                    desc: "Operation to trigger.",
+                    enum: [
+                        {value: "0", name: "NO_OPERATION",  desc: "Won't trigger any operation."}
+                        {value: "1", name: "CLEAR",         desc: "Clear all accelarator's weights."}
+                        {value: "2", name: "LOAD_WEIGHTS",  desc: "Program accelarator's weights."}
+                        {value: "3", name: "LOAD_BIAS",     desc: "Load layer's bias."}
+                        {value: "4", name: "COMPUTE",       desc: "Perform the MAC operation."}
+                    ]
+                },
+                {
+                    bits: "7:4",
+                    name: "WORD_LINE",
+                    desc: "Word line selection of the segments decoded."                
+                },
+                {
+                    bits: "10:8",
+                    name: "BIT_LINE",
+                    desc: "Bit line selection of the segments decoded."
+                },
+                {
+                    bits:  "15:11",
+                    name: "WRITE_COL_SELS",
+                    desc: "Write column selection decoded."
+                },
+                {
+                    bits: "19:16",
+                    name: "STATE",
+                    desc: "The status of the accelerator.",
+                    enum: [
+                        {value: "0", name: "READY",         desc: "Accelerator is ready for use."}
+                        {value: "1", name: "CLEAR",         desc: "Accelerator is reset."}
+                        {value: "2", name: "BUSY",          desc: "Accelerator is busy performing an operation."}
+                        {value: "3", name: "FETCH_WEIGHTS", desc: "Accelerator is loading weights from the memory."}
+                        {value: "4", name: "PROGRAMMING",   desc: "Accelerator is programming with the weights."}
+                        {value: "5", name: "FETCH_BIAS",    desc: "Accelerator is loading biases from the memory."}
+                        {value: "6", name: "FETCH_INPUT",   desc: "Accelerator is loading input from the memory."}
+                        {value: "7", name: "COMPUTE",       desc: "Accelerator is performing mac operations."}
+                        {value: "8", name: "STORE_OUTPUT",  desc: "Accelerator is storing the result to the memory."}
+                    ]
+                }
+            ]
+        },
+        {
+            name: "LAYER_SIZE",
+            desc: "Contains the size of the layer."
+            swaccess: "rw",
+            fields: [
+                {
+                    bits: "7:0",
+                    name: "FT_SZ",
+                    desc: "Size of fetures."
+                },
+                {
+                    bits: "15:8",
+                    name: "IN_SZ",
+                    desc: "Window one dimention size (width or height) of input."
+                },
+                {
+                    bits: "23:16",
+                    name: "WG_SZ",
+                    desc: "Window one dimention size (width or height) of weights."
+                },
+                {
+                    bits: "31:24",
+                    name: "CH_SZ",
+                    desc: "Size of channels."
+                }
+            ]
+        },
+        {
+            name: "BIAS_ADDR"
+            desc: "Address of layer's bias to memory."
+            swaccess: "wo",
+            fields: [ { bits: "31:0" } ]
+        },
+        {
+            name: "IN_BIT_ADDR"
+            desc: "Address of layer's input to memory."
+            swaccess: "wo",
+            fields: [ { bits: "31:0" } ]
+        },
+        {
+            name: "PIXEL_ADDR"
+            desc: "Address of layer's output to memory."
+            swaccess: "wo",
+            fields: [ { bits: "31:0" } ]
+        }    
+    ]
+}

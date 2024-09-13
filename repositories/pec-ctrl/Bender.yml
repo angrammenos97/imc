@@ -1,0 +1,27 @@
+package:
+  name: pec
+  authors: 
+    - "Grammenos Anastasios"
+
+dependencies:
+  pec-engine:         { path: "../pec-engine" }
+  axi:                { git: "https://github.com/pulp-platform/axi.git", version: 0.29.1 }
+  register_interface: { git: "https://github.com/pulp-platform/register_interface.git", version: 0.3.1 }
+  ibex:               { git: "https://github.com/pulp-platform/ibex.git", rev: "pulpissimo-v6.1.2" }
+  common_cells:       { git: "https://github.com/pulp-platform/common_cells.git", version: 1.21.0 }
+  hwpe-stream:        { git: "https://github.com/pulp-platform/hwpe-stream.git", version: 1.6.3 }
+
+sources:
+  # packages and interfaces
+  - rtl/pec_reg_pkg.sv
+  - rtl/pec_package.sv
+  # axi_to_ip
+  - rtl/axi_to_ip/pec_reg_top.sv
+  - rtl/axi_to_ip/pec_axi_to_ip.sv
+  # streamer
+  - rtl/streamer/pec_streamer_source.sv
+  - rtl/streamer/pec_streamer_sink.sv
+  - rtl/streamer/pec_streamer_top.sv
+  # wrap
+  - rtl/wrap/pec_controller.sv
+  - rtl/wrap/pec_top.sv
