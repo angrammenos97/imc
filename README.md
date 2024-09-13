@@ -17,12 +17,10 @@ My thesis with the title "***Integration of an In-Memory Accelerator into a RISC
 In-memory computing (IMC) is a novel approach that reduces CPU utilization and data transfer by performing computations directly in memory. This type of computing is beneficial for neural networks, where many simple operations execute in parallel. This project integrates an IMC accelerator with a RISC-V microcontroller, focusing on edge computing applications where low-power devices with embedded sensors process data locally
 
 ## In-Memory Accelerator Architecture
-
-<div style="float: right; margin-left:20px;">
-    <img src="docs/pec_engine_architecture.gif" alt="Sample Image" width="300px"/>
-</div>
-
 The used IMC performs bit-decomposed integer convolution operation, presented by the following formula.
+
+<img src="docs/pec_engine_architecture.gif" align="right" width="350px" style="margin-left: 20;"/>
+
 $$
 O(x,y,z) = \sum_{m=0}^{I_p-1}i_s
 \left(
@@ -35,6 +33,7 @@ O(x,y,z) = \sum_{m=0}^{I_p-1}i_s
     \right)\ll (m+n)
 \right)
 $$
+
 $$
 i_s = \begin{cases}
 1 & m < I_p-1 \\
@@ -50,12 +49,10 @@ Its architecture consists of the following components:
 - Segment: A matrix of multiplexed memory cells that store weights of different layers.
 - Processing Element (PE): A matrix of segments along with ADC and left-shift circuits to perform inference.
 - PE Cluster: A cluster of processing elements along with adders and ReLU circuits that perform the post-processing functions (bias addition, activation function)
-<div style="clear: both;"></div>
+<br clear="both"/>
 
 ## PULPissimo Microcontroller
-<div style="float: right; margin-left:20px;">
-    <img src="docs/pulpissimo_archi.png" alt="Sample Image" width="300px"/>
-</div>
+<img src="docs/pulpissimo_archi.png" align="right" width="350px" style="margin-left: 20;"/>
 
 The microcontroller chosen for this task is the PULPissimo, part of the Parallel Ultra Low Power family, featuring a RISC-V processor at its core due to its:
 - Highly Parameterized Architecture
@@ -64,7 +61,7 @@ The microcontroller chosen for this task is the PULPissimo, part of the Parallel
 - Peripheral Support
 
 Connecting an MCU with peripherals and integrating it with an accelerator provides flexibility and adaptability for neural network execution as an edge device.
-<div style="clear: both;"></div>
+<br clear="both"/>
 
 ## Developed Controller Module
 ### Version 1
@@ -74,9 +71,8 @@ The RISC-V core manages the accelerator using the developed control circuits. Th
 
 The state machine follows different flows depending on the desired operation. For 4-bit integer numbers, it can perform a programming operation, storing weights in the IMC or inference by supplying input bits and fetching the results.
 
-|||
+|![](docs/controller_module_v1.png) | ![](docs/imc_fsm_v1.gif)|
 |-|-|
-![](docs/controller_module_v1.png) | ![](docs/imc_fsm_v1.gif)
 
 ### Version 2
 An enhanced version of the controller module was introduced. This upgraded version compares with the previous by:
@@ -85,9 +81,8 @@ An enhanced version of the controller module was introduced. This upgraded versi
 
 In precise terms, the "streamer source" circuit retrieves data from the memory, whereas the "streamer sink" is entrusted with storing data back to the memory. The FSM of the enhanced controller incorporates three primary flows, each executed based on the requested process initiated by the software. These are the IMC programming, the bias fetching, and the inference with input data.
 
-|||
+|![](docs/controller_module_v2.png) | ![](docs/imc_fsm_v2.gif)|
 |-|-|
-![](docs/controller_module_v2.png) | ![](docs/imc_fsm_v2.gif)
 
 ## Verification and Simulation
 The implementation's correctness verification happens with a developed testbench file. A quantized neural network was trained on a High-Performance Computing (HPC) system using the "QKeras" framework, and the trained weights, biases, and the network's output were exported and incorporated into the software running on the microcontroller's core.
