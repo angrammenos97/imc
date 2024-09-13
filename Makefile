@@ -24,7 +24,7 @@ repositories:
 	mkdir repositories
 	git clone repositories_db/pec_intergration.git	repositories/pec_intergration
 	git clone repositories_db/pec-ctrl.git 			repositories/pec-ctrl -b new_controller
-	git clone repositories_db/pec-engine.git 		repositories/pec-engine
+	# git clone repositories_db/pec-engine.git 		repositories/pec-engine
 	git clone repositories_db/pulp_soc.git 			repositories/pulp_soc
 	git clone repositories_db/pulpissimo.git 		repositories/pulpissimo
 
