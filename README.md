@@ -19,8 +19,6 @@ In-memory computing (IMC) is a novel approach that reduces CPU utilization and d
 ## In-Memory Accelerator Architecture
 The used IMC performs bit-decomposed integer convolution operation, presented by the following formula.
 
-<img src="docs/pec_engine_architecture.gif" align="right" width="350px" style="margin-left: 20;"/>
-
 $$
 O(x,y,z) = \sum_{m=0}^{I_p-1}i_s
 \left(
@@ -44,6 +42,8 @@ w_s= \begin{cases}
 -1 & n = W_p - 1
 \end{cases}
 $$
+
+<img src="docs/pec_engine_architecture.gif" align="right" width="350px" style="margin-left: 20;"/>
 
 Its architecture consists of the following components:
 - Segment: A matrix of multiplexed memory cells that store weights of different layers.
